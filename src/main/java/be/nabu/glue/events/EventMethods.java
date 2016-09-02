@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 
 import be.nabu.glue.ScriptRuntime;
 import be.nabu.glue.annotations.GlueMethod;
@@ -22,6 +23,14 @@ public class EventMethods {
 	
 	private static Map<String, EventDispatcher> dispatchers = new HashMap<String, EventDispatcher>();
 	private static ForkJoinPool pool = new ForkJoinPool();
+	
+	static {
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			public void run() {
+				pool.awaitQuiescence(365, TimeUnit.DAYS);
+			}
+		}));
+	}
 	
 	private static EventDispatcher getDispatcher(String name) {
 		if (!dispatchers.containsKey(name)) {
@@ -113,7 +122,11 @@ public class EventMethods {
 		}
 		@Override
 		public Object handle(Object event, Object response, boolean isLast) {
-			return GlueUtils.calculate(lambda, runtime, Arrays.asList(event));
+			Boolean accept = (Boolean) GlueUtils.calculate(lambda, runtime, Arrays.asList(event));
+			if (accept != null && accept) {
+				return response;
+			}
+			return null;
 		}
 	}
 }
