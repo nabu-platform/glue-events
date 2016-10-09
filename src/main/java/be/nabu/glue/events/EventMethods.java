@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
-import be.nabu.glue.ScriptRuntime;
 import be.nabu.glue.annotations.GlueMethod;
-import be.nabu.glue.api.Lambda;
 import be.nabu.glue.api.Script;
-import be.nabu.glue.impl.GlueUtils;
+import be.nabu.glue.core.api.Lambda;
+import be.nabu.glue.core.impl.GlueUtils;
+import be.nabu.glue.utils.ScriptRuntime;
 import be.nabu.libs.evaluator.annotations.MethodProviderClass;
 import be.nabu.libs.events.api.EventDispatcher;
 import be.nabu.libs.events.api.EventHandler;

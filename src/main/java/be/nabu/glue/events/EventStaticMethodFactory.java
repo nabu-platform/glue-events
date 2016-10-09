@@ -3,7 +3,7 @@ package be.nabu.glue.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.nabu.glue.api.StaticMethodFactory;
+import be.nabu.glue.core.api.StaticMethodFactory;
 
 public class EventStaticMethodFactory implements StaticMethodFactory {
 
