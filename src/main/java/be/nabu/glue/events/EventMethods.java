@@ -72,7 +72,12 @@ public class EventMethods {
 				@Override
 				public void run() {
 					fork.registerInThread();
-					dispatcher.fire(event, source, null, null);
+					try {
+						dispatcher.fire(event, source, null, null);
+					}
+					finally {
+						fork.unregisterInThread();
+					}
 				}
 			});
 		}
